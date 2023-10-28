@@ -8,4 +8,5 @@ import "github.com/Sotnasjeff/clean-arch-api/internal/usecase"
 
 type Resolver struct {
 	CreateOrderUseCase usecase.CreateOrderUseCase
+	GetOrdersUseCase   usecase.GetOrdersUseCase
 }

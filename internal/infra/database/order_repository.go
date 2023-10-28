@@ -26,6 +26,39 @@ func (r *OrderRepository) Save(order *entity.Order) error {
 	return nil
 }
 
+func (r *OrderRepository) SelectById(id string) (*entity.Order, error) {
+	stmt, err := r.Db.Prepare("SELECT * FROM orders WHERE id = ?")
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+	var o entity.Order
+	err = stmt.QueryRow(id).Scan(&o.ID, &o.Price, &o.Tax, &o.FinalPrice)
+	if err != nil {
+		return nil, err
+	}
+
+	return &o, nil
+}
+
+func (r *OrderRepository) Select() ([]entity.Order, error) {
+	rows, err := r.Db.Query("SELECT * FROM orders ORDER BY id")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var o []entity.Order
+	for rows.Next() {
+		var order entity.Order
+		err = rows.Scan(&order.ID, &order.Price, &order.Tax, &order.FinalPrice)
+		if err != nil {
+			return nil, err
+		}
+		o = append(o, order)
+	}
+	return o, nil
+}
+
 func (r *OrderRepository) GetTotal() (int, error) {
 	var total int
 	err := r.Db.QueryRow("Select count(*) from orders").Scan(&total)

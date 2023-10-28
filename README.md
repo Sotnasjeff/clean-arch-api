@@ -7,9 +7,9 @@ Agora é a hora de botar a mão na massa. Pra este desafio, você precisará cri
 
 Esta listagem precisa ser feita com:
 
-- [] Endpoint REST (GET /order)
+- [x] Endpoint REST (GET /order)
 
-- [] Service ListOrders com GRPC
+- [x] Service ListOrders com GRPC
 
 - [] Query ListOrders GraphQL
 

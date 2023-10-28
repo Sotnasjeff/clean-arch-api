@@ -7,6 +7,7 @@ import (
 	"github.com/Sotnasjeff/clean-arch-api/internal/entity"
 	"github.com/Sotnasjeff/clean-arch-api/internal/usecase"
 	"github.com/Sotnasjeff/clean-arch-api/pkg/events"
+	"github.com/go-chi/chi/v5"
 )
 
 type WebOrderHandler struct {
@@ -46,4 +47,33 @@ func (h *WebOrderHandler) Create(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+func (h *WebOrderHandler) GetOrderByID(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	if id == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	getOrderById := usecase.NewGetOrdersUseCase(h.OrderRepository)
+	order, err := getOrderById.GetOrderByID(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(order)
+}
+
+func (h *WebOrderHandler) GetAllOrders(w http.ResponseWriter, r *http.Request) {
+	getAllOrders := usecase.NewGetOrdersUseCase(h.OrderRepository)
+	orders, err := getAllOrders.ListAllOrders()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(orders)
 }
