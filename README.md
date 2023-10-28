@@ -11,6 +11,6 @@ Esta listagem precisa ser feita com:
 
 - [x] Service ListOrders com GRPC
 
-- [] Query ListOrders GraphQL
+- [x] Query ListOrders GraphQL
 
 Não esqueça de criar as migrações necessárias e o arquivo api.http com a request para criar e listar as orders.
