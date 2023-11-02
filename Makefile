@@ -1,5 +1,5 @@
 createmigration:
-	migrate create -ext=internal/sql -dir=internal/sql/migrations -seq init
+	migrate create -ext=sql -dir=pkg/sql/migrations -seq init
 
 migrate:
 	migrate -path=pkg/sql/migrations -database "mysql://root:root@tcp(localhost:3306)/orders" -verbose up
