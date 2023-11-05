@@ -68,7 +68,7 @@ func (h *WebOrderHandler) GetOrderByID(w http.ResponseWriter, r *http.Request) {
 
 func (h *WebOrderHandler) GetAllOrders(w http.ResponseWriter, r *http.Request) {
 	getAllOrders := usecase.NewGetOrdersUseCase(h.OrderRepository)
-	orders, err := getAllOrders.ListAllOrders()
+	orders, err := getAllOrders.Execute()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

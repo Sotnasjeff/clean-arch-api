@@ -36,7 +36,7 @@ func (g *GetOrdersUseCase) GetOrderByID(id string) (ListOrdersOutputDTO, error) 
 	}, nil
 }
 
-func (g *GetOrdersUseCase) ListAllOrders() ([]ListOrdersOutputDTO, error) {
+func (g *GetOrdersUseCase) Execute() ([]ListOrdersOutputDTO, error) {
 	orders, err := g.OrderRepository.Select()
 	if err != nil {
 		return []ListOrdersOutputDTO{}, nil
